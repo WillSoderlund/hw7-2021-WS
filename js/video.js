@@ -1,13 +1,16 @@
 window.addEventListener("load", function() {
     console.log("Page Loaded");
 
-    var video = document.querySelector("video"); // Assuming there's only one video element
-    video.autoplay = false;
-    video.loop = false;
+    var video = document.querySelector("video"); // Assuming there's only one video element.
+    
+    // Initialize video properties.
+    video.autoplay = false; // Explicitly set autoplay to false.
+    video.loop = false;    // Turn off looping.
 
     document.getElementById("play").addEventListener("click", function() {
         video.play();
-        updateVolumeInfo();
+        // Call updateVolumeInfo() after play to ensure volume is updated correctly.
+        updateVolumeInfo(); 
     });
 
     document.getElementById("pause").addEventListener("click", function() {
@@ -15,16 +18,17 @@ window.addEventListener("load", function() {
     });
 
     document.getElementById("slower").addEventListener("click", function() {
-        video.playbackRate *= 0.9; // Decrease speed by 10%
+        video.playbackRate *= 0.9; // Correctly slow down by 10%.
         console.log("New speed is", video.playbackRate);
     });
 
     document.getElementById("faster").addEventListener("click", function() {
-        video.playbackRate /= 0.9; // Increase speed to counteract slow down
+        video.playbackRate /= 0.9; // Correctly speed up to counteract slow down.
         console.log("New speed is", video.playbackRate);
     });
 
     document.getElementById("skip").addEventListener("click", function() {
+        // Ensure skip ahead correctly and restart if needed.
         if (video.currentTime + 10 > video.duration) {
             video.currentTime = 0;
         } else {
@@ -34,30 +38,29 @@ window.addEventListener("load", function() {
     });
 
     document.getElementById("mute").addEventListener("click", function() {
-        if (video.muted) {
-            video.muted = false;
-            this.textContent = "Mute";
-        } else {
-            video.muted = true;
-            this.textContent = "Unmute";
-        }
+        video.muted = !video.muted; // Toggle muting.
+        // Update button text based on mute state.
+        this.textContent = video.muted ? "Unmute" : "Mute"; 
     });
 
     document.getElementById("slider").addEventListener("input", function() {
         video.volume = this.value / 100;
+        // Ensure volume info is updated correctly after slider adjustment.
         updateVolumeInfo();
     });
 
     document.getElementById("vintage").addEventListener("click", function() {
-        video.classList.add("oldSchool");
+        video.className = "oldSchool"; // Ensure class is applied correctly.
     });
 
     document.getElementById("orig").addEventListener("click", function() {
-        video.classList.remove("oldSchool");
+        video.className = ""; // Ensure class is removed correctly.
     });
 
     function updateVolumeInfo() {
         var volumeSpan = document.getElementById("volume");
-        volumeSpan.textContent = Math.round(video.volume * 100) + "%";
+        // Ensure volume is displayed correctly, with the % sign.
+        volumeSpan.textContent = (video.volume * 100).toFixed(0) + "%";
     }
 });
+
