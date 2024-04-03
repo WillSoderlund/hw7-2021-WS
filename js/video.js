@@ -49,6 +49,7 @@ window.addEventListener("load", function() {
 
     document.getElementById("vintage").addEventListener("click", function() {
         video.className = "oldSchool";
+    });
 
     document.getElementById("orig").addEventListener("click", function() {
         video.className = "";
